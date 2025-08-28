@@ -14,7 +14,7 @@ class UploadDocument extends Component
 
     public $file;
     public $documents;
-    public $document_type = 'other'; // Тип документа по умолчанию
+    public $document_type = 'other'; // Default document type
 
     public function mount()
     {
@@ -29,7 +29,7 @@ class UploadDocument extends Component
     public function save()
     {
         $this->validate([
-            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240', // 10MB
+            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240', // Max 10MB
         ]);
         
         $path = $this->file->store('documents', 'public');
@@ -37,7 +37,7 @@ class UploadDocument extends Component
         Document::create([
             'user_id' => Auth::id(),
             'path' => $path,
-            'original_name' => $this->file->getClientOriginalName(), // <-- ИСПРАВЛЕНО
+            'original_name' => $this->file->getClientOriginalName(), // Fixed
             'document_type' => $this->document_type,
             'status' => 'pending',
         ]);

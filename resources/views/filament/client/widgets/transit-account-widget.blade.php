@@ -1,7 +1,7 @@
 <x-filament-widgets::widget>
     <x-filament::section>
         <x-slot name="heading">
-            Транзитные счета
+            Transit Accounts
         </x-slot>
 
         @if($transitAccounts && $transitAccounts->isNotEmpty())
@@ -9,8 +9,8 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="py-3 px-6">Наименование</th>
-                            <th scope="col" class="py-3 px-6">Тип</th>
+                            <th scope="col" class="py-3 px-6">Name</th>
+                            <th scope="col" class="py-3 px-6">Type</th>
                             <th scope="col" class="py-3 px-6">Balance</th>
                             <th scope="col" class="py-3 px-6">Status</th>
                         </tr>
@@ -36,7 +36,7 @@
                 </table>
             </div>
         @else
-            <p>У вас нет транзитных счетов.</p>
+            <p>You have no transit accounts.</p>
         @endif
     </x-filament::section>
 </x-filament-widgets::widget>

@@ -16,7 +16,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('withdrawals', function (Blueprint $table) {
-            $table->text('details'); // На случай отката
+            $table->text('details'); // For rollback
         });
     }
 };

@@ -17,21 +17,21 @@ class WithdrawalResource extends Resource
     protected static ?string $model = Withdrawal::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
-    protected static ?string $modelLabel = 'Вывод средств';
-    protected static ?string $pluralModelLabel = 'Вывод средств';
+    protected static ?string $modelLabel = 'Withdrawal';
+    protected static ?string $pluralModelLabel = 'Withdrawals';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('amount')
-                    ->label('Сумма вывода')
+                    ->label('Withdrawal Amount')
                     ->required()
                     ->numeric()
                     ->prefix('€'),
                 Forms\Components\Textarea::make('requisites')
-                    ->label('Реквизиты для вывода')
-                    ->placeholder('Например: IBAN, SWIFT, название банка, имя получателя')
+                    ->label('Withdrawal Details')
+                    ->placeholder('e.g. IBAN, SWIFT, bank name, recipient name')
                     ->required()
                     ->columnSpanFull(),
             ]);
@@ -42,20 +42,26 @@ class WithdrawalResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('amount')
-                    ->label('Сумма')
+                    ->label('Amount')
                     ->money('EUR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->label('Статус')
+                    ->label('Status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state) => match ($state) {
+                        'В обработке' => 'Pending',
+                        'Выполнено', 'approve' => 'Approved',
+                        'Отклонено' => 'Rejected',
+                        default => ucfirst($state),
+                    })
                     ->color(fn (string $state): string => match ($state) {
-                        'В обработке' => 'warning',
-                        'Выполнено' => 'success', 'approve' => 'success',
-                        'Отклонено' => 'danger',
+                        'pending', 'В обработке' => 'warning',
+                        'approved', 'Выполнено', 'approve' => 'success',
+                        'rejected', 'Отклонено' => 'danger',
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Дата заявки')
+                    ->label('Request Date')
                     ->dateTime('d.m.Y H:i')
                     ->sortable(),
             ])

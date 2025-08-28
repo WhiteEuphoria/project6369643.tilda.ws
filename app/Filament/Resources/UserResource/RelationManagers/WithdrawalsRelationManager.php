@@ -7,17 +7,31 @@ class WithdrawalsRelationManager extends RelationManager {
         return $form->schema([
             Forms\Components\TextInput::make('amount')->numeric()->prefix('€')->required(),
             Forms\Components\Textarea::make('requisites')->required()->columnSpanFull(),
-            Forms\Components\Select::make('status')->options(['В обработке' => 'В обработке', 'Выполнено' => 'Выполнено', 'Отклонено' => 'Отклонено'])->required(),
+            // Use English status values for consistency
+            Forms\Components\Select::make('status')->options([
+                'pending' => 'Pending',
+                'approved' => 'Approved',
+                'rejected' => 'Rejected',
+            ])->required(),
         ]);
     }
     public function table(Table $table): Table {
         return $table->recordTitleAttribute('requisites')->columns([
             Tables\Columns\TextColumn::make('amount')->money('EUR'),
-            Tables\Columns\TextColumn::make('status')->badge()->color(fn (string $state): string => match ($state) {
-                'В обработке' => 'warning', 'Выполнено' => 'success', 'Отклонено' => 'danger',
-                default => 'gray',
-                'approve' => 'success',
-            }),
+            Tables\Columns\TextColumn::make('status')
+                ->badge()
+                ->formatStateUsing(fn (string $state) => match ($state) {
+                    'В обработке' => 'Pending',
+                    'Выполнено', 'approve' => 'Approved',
+                    'Отклонено' => 'Rejected',
+                    default => ucfirst($state),
+                })
+                ->color(fn (string $state): string => match ($state) {
+                    'pending', 'В обработке' => 'warning',
+                    'approved', 'Выполнено', 'approve' => 'success',
+                    'rejected', 'Отклонено' => 'danger',
+                    default => 'gray',
+                }),
         ])->headerActions([Tables\Actions\CreateAction::make()])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
     }
 }

@@ -16,21 +16,21 @@ class DocumentUploadForm extends Component
 
     protected $rules = [
         'document_type' => 'required|in:passport,utility_bill,other',
-        'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', // 2MB Max
+        'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', // Max 2MB
     ];
 
     public function submit()
     {
         $this->validate();
 
-        // Сохраняем файл и получаем его путь. ЭТО БЫЛО ПРОПУЩЕНО.
+        // Store the file and get its path.
         $path = $this->file->store('documents', 'public');
 
-        // Теперь передаем все необходимые поля в базу данных.
+        // Create the document record with all required fields.
         Document::create([
             'user_id' => auth()->id(),
             'document_type' => $this->document_type,
-            'path' => $path, // <-- ИСПРАВЛЕНО
+            'path' => $path, // Fixed
             'status' => 'pending',
         ]);
 

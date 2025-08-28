@@ -26,7 +26,9 @@ class ClientPanelProvider extends PanelProvider
             ->id('client')
             ->path('client')
             ->login()
-            ->registration() // <--- Добавлена эта строчка
+            ->brandLogo(fn () => view('filament.client.logo'))
+            ->brandLogoHeight('2rem')
+            ->registration() // Registration enabled for client panel
             ->colors([
                 'primary' => Color::Amber,
             ])

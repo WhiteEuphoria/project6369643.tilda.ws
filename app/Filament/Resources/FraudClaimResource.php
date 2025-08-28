@@ -15,8 +15,8 @@ class FraudClaimResource extends Resource
     protected static ?string $model = FraudClaim::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-exclamation';
-    protected static ?string $modelLabel = 'Заявление о мошенничестве';
-    protected static ?string $pluralModelLabel = 'Заявления о мошенничестве';
+    protected static ?string $modelLabel = 'Fraud Claim';
+    protected static ?string $pluralModelLabel = 'Fraud Claims';
 
     public static function form(Form $form): Form
     {
@@ -24,21 +24,21 @@ class FraudClaimResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
-                    ->label('Пользователь')
+                    ->label('User')
                     ->searchable()
                     ->required(),
                 Forms\Components\Textarea::make('details')
-                    ->label('Описание')
+                    ->label('Description')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\Select::make('status')
-                    ->label('Статус')
+                    ->label('Status')
                     ->options([
-                        'В рассмотрении' => 'В рассмотрении',
-                        'Одобрено' => 'Одобрено',
-                        'Отклонено' => 'Отклонено',
+                        'pending' => 'Pending',
+                        'approved' => 'Approved',
+                        'rejected' => 'Rejected',
                     ])
-                    ->default('В рассмотрении')
+                    ->default('pending')
                     ->required(),
             ]);
     }
@@ -48,24 +48,30 @@ class FraudClaimResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Пользователь')
+                    ->label('User')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('details')
-                    ->label('Описание')
+                    ->label('Description')
                     ->limit(60)
                     ->wrap(),
-                Tables\Columns\tExtColumn::make('status')
-                    ->label('Статус')
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state) => match ($state) {
+                        'В рассмотрении' => 'Pending',
+                        'Одобрено' => 'Approved',
+                        'Отклонено' => 'Rejected',
+                        default => ucfirst($state),
+                    })
                     ->color(fn (string $state): string => match ($state) {
-                        'В рассмотрении' => 'warning',
-                        'Одобрено' => 'success',
-                        'Отклонено' => 'danger',
+                        'pending', 'В рассмотрении' => 'warning',
+                        'approved', 'Одобрено' => 'success',
+                        'rejected', 'Отклонено' => 'danger',
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Дата подачи')
+                    ->label('Submitted At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

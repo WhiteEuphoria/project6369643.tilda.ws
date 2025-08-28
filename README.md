@@ -1,59 +1,85 @@
 # Laravel User Admin System
 
 <p align="center">
-  Простая и мощная система администрирования пользователей, созданная с помощью Laravel.
+  A simple and powerful user administration system built with Laravel.
 </p>
 
-## О проекте
+## About
 
-Этот проект представляет собой панель администрирования пользователей, созданную с использованием фреймворка Laravel. Он предоставляет базовый функционал для управления пользователями, включая создание, просмотр, редактирование и удаление пользователей.
+This project provides a user administration panel built on the Laravel framework. It offers basic user management features including create, read, update, and delete (CRUD), plus authentication and authorization.
 
-Основные возможности:
-*   Управление пользователями (CRUD)
-*   Аутентификация и авторизация
-*   Создан на базе [Laravel](https://laravel.com)
+Key features:
+* User management (CRUD)
+* Authentication and authorization
+* Built with [Laravel](https://laravel.com)
 
-## Начало работы
+## Getting Started
 
-Для запуска локальной копии проекта следуйте этим простым шагам.
+Follow these steps to run the project locally.
 
-### Необходимые условия
+### Prerequisites
 
-Убедитесь, что у вас установлены PHP, Composer и Node.js.
+Ensure you have PHP, Composer, and Node.js installed.
 
-### Установка
+### Installation
 
-1.  Клонируйте репозиторий
+1. Clone the repository
     ```sh
     git clone https://example.com/your_repository.git
+    cd your_repository
     ```
-2.  Установите зависимости PHP
+2. Install PHP dependencies
     ```sh
     composer install
     ```
-3.  Создайте файл `.env`
+3. Create the `.env` file
     ```sh
     cp .env.example .env
     ```
-4.  Сгенерируйте ключ приложения
+4. Generate the application key
     ```sh
     php artisan key:generate
     ```
-5.  Настройте ваш файл `.env` (база данных, почта и т.д.)
+5. Configure your `.env` (database, mail, etc.)
 
-6.  Запустите миграции базы данных
+6. Run database migrations
     ```sh
     php artisan migrate
     ```
-7.  (Опционально) Заполните базу данных тестовыми данными
+7. (Optional) Seed the database
     ```sh
     php artisan db:seed
     ```
-8.  Запустите сервер для разработки
+8. Start the development server
     ```sh
     php artisan serve
     ```
 
-## Лицензия
+## Dev Monitoring
 
-Данный проект распространяется под лицензией MIT. Смотрите `LICENSE` для получения дополнительной информации.
+- Full dev stack (server, queue, logs, Vite):
+  ```sh
+  # install dependencies
+  composer install
+  npm install
+
+  # run dev stack (one command)
+  composer run dev
+  ```
+  The `composer run dev` script starts concurrently:
+  - `php artisan serve`
+  - `php artisan queue:listen --tries=1`
+  - `php artisan pail --timeout=0` (log viewer)
+  - `npm run dev` (Vite with HMR)
+
+- Continuous test watcher:
+  ```sh
+  bash scripts/watch-tests.sh
+  ```
+  If `entr` is installed, it will be used for efficient file watching; otherwise the script falls back to a portable polling mode (1s).
+
+Note: Make sure dependencies are installed first: `composer install` and `npm install`.
+
+## License
+
+This project is released under the MIT License. See `LICENSE` for details.

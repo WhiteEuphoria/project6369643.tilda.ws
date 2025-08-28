@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Создаем главного администратора
+        // Create the main administrator
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@system.com',
@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
             'verification_status' => 'approved',
             'main_balance' => 100000,
         ]);
-        // Создаем тестового клиента для демонстрации
+        // Create a demo client
         User::factory()->create([
             'name' => 'Test Client',
             'email' => 'client@demo.com',
             'password' => Hash::make('password'),
             'is_admin' => false,
-            'verification_status' => 'pending', // Статус "в ожидании" для проверки логики
+            'verification_status' => 'pending', // "Pending" status to test logic
             'main_balance' => 50000,
         ]);
     }

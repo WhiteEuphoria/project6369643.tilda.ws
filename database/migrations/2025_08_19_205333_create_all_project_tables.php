@@ -15,7 +15,9 @@ return new class extends Migration {
         });
         Schema::create('fraud_claims', function (Blueprint $table) {
             $table->id(); $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->text('details'); $table->string('status')->default('В рассмотрении'); $table->timestamps();
+            $table->text('details');
+            $table->string('status')->default('В рассмотрении'); // Status default (legacy): В рассмотрении
+            $table->timestamps();
         });
         Schema::create('documents', function (Blueprint $table) {
             $table->id(); $table->foreignId('user_id')->constrained()->cascadeOnDelete();

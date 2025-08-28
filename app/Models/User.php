@@ -49,7 +49,8 @@ class User extends Authenticatable implements FilamentUser
     }
     public function transitAccounts(): HasMany
     {
-        return $this->hasMany(Account::class)->where('type', 'Транзитный');
+        // Support both legacy Russian and English stored values
+        return $this->hasMany(Account::class)->whereIn('type', ['Transit', 'Транзитный']);
     }
     public function fraudClaims(): HasMany
     {

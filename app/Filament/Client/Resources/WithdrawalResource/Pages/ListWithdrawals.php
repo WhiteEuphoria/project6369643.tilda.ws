@@ -13,7 +13,7 @@ class ListWithdrawals extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('Вывод средств'),
+            Actions\CreateAction::make()->label('Request Withdrawal'),
         ];
     }
 }

@@ -17,8 +17,8 @@ class FraudClaimResource extends Resource
     protected static ?string $model = FraudClaim::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-exclamation';
-    protected static ?string $modelLabel = 'Заявление о мошенничестве';
-    protected static ?string $pluralModelLabel = 'Заявления о мошенничестве';
+    protected static ?string $modelLabel = 'Fraud Claim';
+    protected static ?string $pluralModelLabel = 'Fraud Claims';
 
 
     public static function form(Form $form): Form
@@ -26,7 +26,7 @@ class FraudClaimResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Textarea::make('details')
-                    ->label('Опишите ситуацию')
+                    ->label('Describe the situation')
                     ->required()
                     ->columnSpanFull(),
             ]);
@@ -37,20 +37,26 @@ class FraudClaimResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('details')
-                    ->label('Описание')
+                    ->label('Description')
                     ->limit(50)
                     ->wrap(),
                 Tables\Columns\TextColumn::make('status')
-                    ->label('Статус')
+                    ->label('Status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state) => match ($state) {
+                        'В рассмотрении' => 'Pending',
+                        'Одобрено' => 'Approved',
+                        'Отклонено' => 'Rejected',
+                        default => ucfirst($state),
+                    })
                     ->color(fn (string $state): string => match ($state) {
-                        'В рассмотрении' => 'warning',
-                        'Одобрено' => 'success',
-                        'Отклонено' => 'danger',
+                        'pending', 'В рассмотрении' => 'warning',
+                        'approved', 'Одобрено' => 'success',
+                        'rejected', 'Отклонено' => 'danger',
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Дата подачи')
+                    ->label('Submitted At')
                     ->dateTime()
                     ->sortable(),
             ])
@@ -80,7 +86,7 @@ class FraudClaimResource extends Resource
         ];
     }
 
-    // Этот метод гарантирует, что клиент видит только свои заявки
+    // Ensure the client only sees their own claims
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->where('user_id', Auth::id());

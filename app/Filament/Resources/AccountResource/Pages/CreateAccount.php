@@ -11,14 +11,14 @@ class CreateAccount extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Если тип счета - Транзитный, а поле 'name' пустое,
-        // мы принудительно задаем ему значение по умолчанию.
+        // If account type is Transit and 'name' is empty,
+        // set a sensible default.
         if (isset($data['type']) && $data['type'] === 'Транзитный' && empty($data['name'])) {
-            $data['name'] = 'Транзитный счет';
+            $data['name'] = 'Transit Account';
         }
 
-        // Если поле 'status' не заполнено, устанавливаем 'Active' по умолчанию.
-        // Это нужно для всех типов счетов, чтобы удовлетворить требование базы данных.
+        // If 'status' is empty, default to 'Active' for all account types
+        // to satisfy database requirements.
         if (empty($data['status'])) {
             $data['status'] = 'Active';
         }

@@ -14,7 +14,7 @@
         </div>
 
         <div>
-            <label for="requisites" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Your Bank Requisites</label>
+            <label for="requisites" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Your Bank Details</label>
             <textarea id="requisites" wire:model="requisites" rows="3" class="block w-full mt-1 dark:bg-gray-900 dark:text-gray-300 rounded-md shadow-sm"></textarea>
             @error('requisites') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
         </div>

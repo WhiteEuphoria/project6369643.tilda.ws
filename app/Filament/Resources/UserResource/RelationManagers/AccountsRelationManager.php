@@ -13,7 +13,7 @@ class AccountsRelationManager extends RelationManager
 {
     protected static string $relationship = 'accounts';
 
-    protected static ?string $title = 'Invoices';
+    protected static ?string $title = 'Accounts';
 
     public function form(Form $form): Form
     {
@@ -26,8 +26,8 @@ class AccountsRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Наименование')
-                    ->default(fn ($record) => $record->type === 'Транзитный' ? 'Транзитный' : $record->name),
+                    ->label('Name')
+                    ->default(fn ($record) => $record->type === 'Транзитный' ? 'Transit' : $record->name),
                 Tables\Columns\TextColumn::make('type')->badge(),
                 Tables\Columns\TextColumn::make('balance')->money('EUR'),
                 Tables\Columns\TextColumn::make('status')->badge(),

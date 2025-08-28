@@ -14,7 +14,7 @@ class RootUserSeeder extends Seeder
     public function run(): void
     {
         User::firstOrCreate(
-            ['email' => 'root@system.com'], // Условие поиска
+            ['email' => 'root@system.com'], // Lookup condition
             [
                 'name' => 'Root Administrator',
                 'password' => Hash::make('password'),

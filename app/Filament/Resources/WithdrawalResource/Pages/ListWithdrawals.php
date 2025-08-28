@@ -13,7 +13,7 @@ class ListWithdrawals extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            // Кнопка "Create" удалена, так как canCreate() возвращает false
+            // "Create" button omitted since canCreate() returns false
         ];
     }
 }

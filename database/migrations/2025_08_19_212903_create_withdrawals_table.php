@@ -8,8 +8,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->decimal('amount', 15, 2);
-            $table->text('requisites'); // Реквизиты для вывода
-            $table->string('status')->default('В обработке'); // Статусы: В обработке, Выполнено, Отклонено
+            $table->text('requisites'); // Withdrawal requisites/details
+            $table->string('status')->default('В обработке'); // Statuses (legacy): В обработке, Выполнено, Отклонено
             $table->timestamps();
         });
     }

@@ -8,7 +8,7 @@ class BalanceDisplay extends Component
 {
     public function render()
     {
-        // Просто передаем баланс текущего пользователя в шаблон
+        // Pass the current user's balance to the view
         return view('livewire.client.balance-display', [
             'balance' => auth()->user()->main_balance
         ]);

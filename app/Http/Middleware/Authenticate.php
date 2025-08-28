@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class Authenticate extends FilamentAuthenticate
 {
-    // В новых версиях Filament этот метод не требуется,
-    // так как логика встроена в родительский класс.
-    // Оставляя этот файл, мы гарантируем, что Laravel
-    // будет использовать правильную логику аутентификации Filament.
+    // In recent Filament versions this override is unnecessary
+    // because the logic exists in the parent class already.
+    // Keeping this file ensures Laravel uses the correct
+    // Filament authentication middleware.
 }

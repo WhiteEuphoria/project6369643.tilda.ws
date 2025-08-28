@@ -6,7 +6,7 @@ use Filament\Pages\Dashboard as BaseDashboard;
 
 class Dashboard extends BaseDashboard
 {
-    // Мы оставляем этот файл пустым, чтобы Filament
-    // автоматически подхватывал все виджеты из папки
+    // Keep this file empty so Filament
+    // auto-discovers all widgets from
     // app/Filament/Client/Widgets
 }

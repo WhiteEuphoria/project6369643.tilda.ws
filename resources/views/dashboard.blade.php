@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <!-- Наши новые компоненты -->
+            <!-- Our new components -->
             <div class="mt-6">
                 @livewire('client.balance-display')
             </div>
@@ -26,7 +26,7 @@
                 @livewire('client.document-upload-form')
             </div>
             
-            <!-- Форму для FraudClaim добавим позже, если она понадобится, чтобы не перегружать интерфейс -->
+            <!-- Add FraudClaim form later if needed to keep UI uncluttered -->
 
         </div>
     </div>
